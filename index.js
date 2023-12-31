@@ -1,10 +1,15 @@
-const unorderedList = document.querySelector("ul");
+const itemList = document.querySelector("ul");
 const inputElement = document.querySelector("input");
-const btn = document.querySelector("button");
+const addButton = document.querySelector("button");
 
 function addItem() {
-  const inputValue = inputElement.value;
+  const inputValue = inputElement.value.trim();
   inputElement.value = "";
+
+  if (inputValue === "") {
+    alert("Please enter item!");
+    return;
+  }
 
   const list = document.createElement("li");
 
@@ -14,14 +19,20 @@ function addItem() {
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "Delete";
   deleteBtn.addEventListener("click", () => {
-    unorderedList.removeChild(list);
+    itemList.removeChild(list);
     inputElement.focus();
   });
 
   list.appendChild(item);
   list.appendChild(deleteBtn);
-  unorderedList.appendChild(list);
+  itemList.appendChild(list);
   inputElement.focus();
 }
 
-btn.addEventListener("click", addItem);
+addButton.addEventListener("click", addItem);
+
+inputElement.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    addItem();
+  }
+});
